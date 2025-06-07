@@ -11,6 +11,9 @@ public class SimRunner {
 	// Size of world in tiles
 	private static final int WORLDWIDTH = 50;
 	private static final int WORLDHEIGHT = 50;
+	
+	// Nanoseconds per tick
+	private static final long TICKNANOS = 1_000_000_000;
 
 	public static void main(String[] args) {
 		World world = new World(WORLDWIDTH, WORLDHEIGHT);
@@ -41,12 +44,11 @@ public class SimRunner {
 		long lastTime = System.nanoTime();
 		while (true) {
 			long thisTime = System.nanoTime();
-			// Time since last frame in seconds
-			double deltaTime = (thisTime - lastTime) / 1_000_000_000.0;
-			lastTime = thisTime;
-			
-			world.update();
-			simView.repaint();
+			if (thisTime - lastTime > TICKNANOS) {
+				lastTime = thisTime;
+				world.update();
+				simView.repaint();
+			}
 		}
 	}
 }

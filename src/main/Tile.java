@@ -4,6 +4,10 @@ public class Tile {
 	
 	private int height;
 	
+	public Tile() {
+		
+	}
+	
 	public int getHeight() {
 		return height;
 	}
