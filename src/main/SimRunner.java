@@ -9,8 +9,8 @@ import java.awt.Toolkit;
 public class SimRunner {
 	
 	// Size of world in tiles
-	private static final int WORLDWIDTH = 50;
-	private static final int WORLDHEIGHT = 50;
+	private static final int WORLDWIDTH = 10;
+	private static final int WORLDHEIGHT = 10;
 	
 	// Nanoseconds per tick
 	private static final long TICKNANOS = 1_000_000_000;

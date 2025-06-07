@@ -28,10 +28,15 @@ public class SimView extends Canvas {
 		int worldWidth = world.getWidth();
 		int tileWidth = getWidth() / worldWidth;
 		
-		g.setColor(Color.RED);
 		for (int y = 0; y < worldHeight; y++) {
 			for (int x = 0; x < worldWidth; x++) {
+				// Draw heights
+				g.setColor(Color.RED);
 				g.drawString("" + world.getTileMap()[y][x].getHeight(), x * tileWidth, y * tileWidth);
+				
+				// Draw grid
+				g.setColor(Color.BLACK);
+				g.drawRect(x * tileWidth, y * tileWidth, tileWidth, tileWidth);
 			}
 		}
 	}	
