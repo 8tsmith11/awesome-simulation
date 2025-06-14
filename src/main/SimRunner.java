@@ -23,7 +23,7 @@ public class SimRunner extends PApplet {
 	
 	public void setup() {
 		world = new World(WORLDWIDTH, WORLDHEIGHT);
-		worldGen = new WorldGenerator(this, 10);
+		worldGen = new WorldGenerator(this, World.MAXHEIGHT);
 		worldGen.generateNoiseTerrain(world.getTileMap());
 		
 		simView = new SimView(world, this, width - height, 0, height, height);

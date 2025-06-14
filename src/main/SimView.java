@@ -44,11 +44,10 @@ public class SimView {
 	public void draw() {
 		for (int y = 0; y < worldHeight; y++) {
 			for (int x = 0; x < worldWidth; x++) {
-				// Draw grid	
-				// Darker color cell = lower height
-				parent.fill((tileMap[y][x].getHeight() * 255) / 9);
+				// Draw grid and colors from tile heights	
+				parent.fill(getHeightColor(tileMap[y][x].getHeight()));
 				parent.stroke(0);
-				parent.strokeWeight(2);
+				parent.strokeWeight(1);
 				parent.rect(viewX + x * tileWidth, viewY + y * tileHeight, tileWidth, tileHeight);
 				
 				
@@ -59,5 +58,9 @@ public class SimView {
 				parent.text(tileMap[y][x].getHeight(), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
 			}
 		}
+	}
+	
+	private int getHeightColor(int h) {
+		return 0;
 	}
 }

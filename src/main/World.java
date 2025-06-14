@@ -1,6 +1,8 @@
 package main;
 
 public class World {
+	public static final int MAXHEIGHT = 100;
+	
 	// World size in tiles
 	private int width, height;
 	private Tile[][] tileMap;
