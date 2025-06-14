@@ -5,7 +5,11 @@ public class Tile {
 	private int height;
 	
 	public Tile() {
-		
+		height = 0;
+	}
+	
+	public Tile(int height) {
+		this.height = height;
 	}
 	
 	public int getHeight() {

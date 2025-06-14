@@ -9,7 +9,6 @@ public class World {
 		this.width = width;
 		this.height = height;
 		tileMap = new Tile[height][width];
-		WorldGenerator.generateFlatTerrain(tileMap);
 	}
 	
 	public void update() {
