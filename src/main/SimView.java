@@ -39,7 +39,7 @@ public class SimView {
 		
 		tileWidth = (float) viewWidth / worldWidth;
 		tileHeight = (float) viewHeight / worldHeight;
-		tileMap[10][10].addWater(10000);
+		tileMap[10][10].addWater(1000000);
 	}
 	
 	public void draw() {
@@ -58,7 +58,7 @@ public class SimView {
 				
 				// Draw height values
 				parent.fill(255, 0, 0);
-				parent.text(tileMap[y][x].getHeight(), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
+				//parent.text(tileMap[y][x].getHeight(), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
 			}
 		}
 	}
