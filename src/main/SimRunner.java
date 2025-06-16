@@ -8,6 +8,10 @@ public class SimRunner extends PApplet {
 	private static final int WORLDWIDTH = 100;
 	private static final int WORLDHEIGHT = 100;
 	
+	// Milliseconds per update tick
+	private static final int MILLISPERTICK = 1;
+	private long lastTime = 0;
+	 
 	private World world;
 	private WorldGenerator worldGen;
 	
@@ -23,13 +27,17 @@ public class SimRunner extends PApplet {
 	
 	public void setup() {
 		world = new World(WORLDWIDTH, WORLDHEIGHT);
-		worldGen = new WorldGenerator(this, World.MAXHEIGHT);
+		worldGen = new WorldGenerator(this);
 		worldGen.generateNoiseTerrain(world.getTileMap());
 		
 		simView = new SimView(world, this, width - height, 0, height, height);
 	}
 	
 	public void draw() {
+		if (millis() - lastTime >= MILLISPERTICK) {
+			lastTime = millis();
+			world.update();
+		}
 		simView.draw();
 	}
 }

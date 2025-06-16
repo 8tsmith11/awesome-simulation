@@ -39,21 +39,24 @@ public class SimView {
 		
 		tileWidth = (float) viewWidth / worldWidth;
 		tileHeight = (float) viewHeight / worldHeight;
+		tileMap[10][10].addWater(10000);
 	}
 	
 	public void draw() {
+		parent.noStroke();
+		parent.textSize(tileWidth / 2);
+		parent.textAlign(PApplet.CENTER, PApplet.CENTER);
 		for (int y = 0; y < worldHeight; y++) {
 			for (int x = 0; x < worldWidth; x++) {
-				// Draw grid and colors from tile heights	
+				// Draw colors from tile heights	
 				parent.fill(getHeightColor(tileMap[y][x].getHeight()));
-				parent.stroke(0);
-				parent.strokeWeight(1);
 				parent.rect(viewX + x * tileWidth, viewY + y * tileHeight, tileWidth, tileHeight);
 				
+				// Draw surface water
+				parent.fill(getWaterColor(tileMap[y][x].getSurfaceWater()));
+				parent.rect(viewX + x * tileWidth, viewY + y * tileHeight, tileWidth, tileHeight);
 				
-				// Draw heights
-				parent.textSize(tileWidth / 2);
-				parent.textAlign(PApplet.CENTER, PApplet.CENTER);
+				// Draw height values
 				parent.fill(255, 0, 0);
 				parent.text(tileMap[y][x].getHeight(), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
 			}
@@ -61,6 +64,22 @@ public class SimView {
 	}
 	
 	private int getHeightColor(int h) {
-		return 0;
+		float percentage = (float) h / WorldGenerator.MAXHEIGHT; // h is percentage % of max height
+		int lowColor  = parent.color(0);                      // black
+	    int highColor = parent.color(222, 184, 135);          // brown
+	    return parent.lerpColor(lowColor, highColor, percentage);
+	}
+	
+	private int getWaterColor(int w) { // Calculate color of surface water based on depth
+		int shallow = parent.color(64, 103, 245); 
+		int deep = parent.color(0, 0, 140);
+		int maxWater = 500; // max water that still makes a color difference
+		
+		if (w <= Tile.WATERPERHEIGHT) {
+			float alpha = ((float) w * 255) / Tile.WATERPERHEIGHT;
+			return parent.color(64, 103, 245, alpha);
+		} else {
+			return parent.lerpColor(shallow, deep, Math.min((float)(w - Tile.WATERPERHEIGHT) / (maxWater - Tile.WATERPERHEIGHT), 1));
+		}
 	}
 }

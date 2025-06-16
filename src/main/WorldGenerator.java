@@ -4,14 +4,15 @@ import processing.core.PApplet;
 
 public class WorldGenerator {
 	
+	// Maximum height for noise terrain
+	public static final int MAXHEIGHT = 10;
+	
+	private static final float NOISESCALE = 0.1f;
+	
 	private PApplet p;
 	
-	// Maximum height for noise terrain
-	private int maxHeight;
-	
-	public WorldGenerator(PApplet parent, int maxHeight) {
+	public WorldGenerator(PApplet parent) {
 		p = parent;
-		this.maxHeight = maxHeight;
 	}
 	
 	/* Initializes the tiles in world */
@@ -19,8 +20,8 @@ public class WorldGenerator {
 	public void generateNoiseTerrain(Tile[][] world) {
 		for (int y = 0; y < world.length; y++) {
 			for (int x = 0; x < world[0].length; x++) {
-				float noiseSample = p.noise(x * 0.1f, y * 0.1f);
-				world[y][x] = new Tile( (int) (noiseSample * (maxHeight + 1)));
+				float noiseSample = p.noise(x * NOISESCALE, y * NOISESCALE);
+				world[y][x] = new Tile( (int) (noiseSample * (MAXHEIGHT + 1)));
 			}
 		}
 	}
