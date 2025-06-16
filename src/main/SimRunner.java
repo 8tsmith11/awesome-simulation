@@ -1,23 +1,44 @@
 package main;
 
+<<<<<<< HEAD
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+=======
+import processing.core.PApplet;
+>>>>>>> 6612f7093746411e01ba3afc73f3992fb52fc7d8
 
-public class SimRunner {
+public class SimRunner extends PApplet {
 	
 	// Size of world in tiles
-	private static final int WORLDWIDTH = 10;
-	private static final int WORLDHEIGHT = 10;
+	private static final int WORLDWIDTH = 100;
+	private static final int WORLDHEIGHT = 100;
 	
-	// Nanoseconds per tick
-	private static final long TICKNANOS = 1_000_000_000;
+	// Milliseconds per update tick
+	private static final int MILLISPERTICK = 1;
+	private long lastTime = 0;
+	 
+	private World world;
+	private WorldGenerator worldGen;
+	
+	private SimView simView;
 
 	public static void main(String[] args) {
-		World world = new World(WORLDWIDTH, WORLDHEIGHT);
+		PApplet.main("main.SimRunner");
+	}
+	
+	public void settings() {
+		fullScreen();
+	}
+	
+	public void setup() {
+		world = new World(WORLDWIDTH, WORLDHEIGHT);
+		worldGen = new WorldGenerator(this);
+		worldGen.generateNoiseTerrain(world.getTileMap());
 		
+<<<<<<< HEAD
 		// Screen dimensions
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = screenSize.width;
@@ -49,6 +70,16 @@ public class SimRunner {
 				world.update();
 				simView.repaint();
 			}
+=======
+		simView = new SimView(world, this, width - height, 0, height, height);
+	}
+	
+	public void draw() {
+		if (millis() - lastTime >= MILLISPERTICK) {
+			lastTime = millis();
+			world.update();
+>>>>>>> 6612f7093746411e01ba3afc73f3992fb52fc7d8
 		}
+		simView.draw();
 	}
 }
