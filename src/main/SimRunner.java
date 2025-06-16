@@ -2,11 +2,9 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.awt.image.BufferStrategy;
 
 public class SimRunner {
 	
@@ -42,10 +40,6 @@ public class SimRunner {
 		frame.add(simView);
 		simView.setBounds(width - height, 0, height, height);
 		
-		// Buffer for smoother repainting
-		simView.createBufferStrategy(2);
-		BufferStrategy bufferStrategy = simView.getBufferStrategy();
-		
 		// Simulation Loop
 		long lastTime = System.nanoTime();
 		while (true) {
@@ -53,13 +47,7 @@ public class SimRunner {
 			if (thisTime - lastTime > TICKNANOS) {
 				lastTime = thisTime;
 				world.update();
-				
-				Graphics g = bufferStrategy.getDrawGraphics();
-				simView.paint(g);
-				g.dispose();
-				bufferStrategy.show();
-			} else {
-				Thread.yield();
+				simView.repaint();
 			}
 		}
 	}
