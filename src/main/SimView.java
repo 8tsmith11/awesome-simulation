@@ -39,7 +39,6 @@ public class SimView {
 		
 		tileWidth = (float) viewWidth / worldWidth;
 		tileHeight = (float) viewHeight / worldHeight;
-		tileMap[10][10].addWater(1000000);
 	}
 	
 	public void draw() {
@@ -59,6 +58,7 @@ public class SimView {
 				// Draw height values
 				parent.fill(255, 0, 0);
 				//parent.text(tileMap[y][x].getHeight(), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
+				//parent.text(world.getWaterHeight(x, y), viewX + x * tileWidth + tileWidth / 2, viewY + y * tileHeight + tileHeight / 2);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class SimView {
 	private int getWaterColor(int w) { // Calculate color of surface water based on depth
 		int shallow = parent.color(64, 103, 245); 
 		int deep = parent.color(0, 0, 140);
-		int maxWater = 500; // max water that still makes a color difference
+		int maxWater = (WorldGenerator.MAXHEIGHT * Tile.WATERPERHEIGHT) / 2; // max water that still makes a color difference
 		
 		if (w <= Tile.WATERPERHEIGHT) {
 			float alpha = ((float) w * 255) / Tile.WATERPERHEIGHT;
