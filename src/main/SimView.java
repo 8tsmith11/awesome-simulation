@@ -73,7 +73,7 @@ public class SimView {
 	private int getWaterColor(int w) { // Calculate color of surface water based on depth
 		int shallow = parent.color(64, 103, 245); 
 		int deep = parent.color(0, 0, 140);
-		int maxWater = (WorldGenerator.MAXHEIGHT * Tile.WATERPERHEIGHT) / 2; // max water that still makes a color difference
+		int maxWater = (WorldGenerator.MAXHEIGHT * Tile.WATERPERHEIGHT) / 2; // water height of the darkest color (half of max world height)
 		
 		if (w <= Tile.WATERPERHEIGHT) {
 			float alpha = ((float) w * 255) / Tile.WATERPERHEIGHT;

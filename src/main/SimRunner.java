@@ -5,11 +5,11 @@ import processing.core.PApplet;
 public class SimRunner extends PApplet {
 	
 	// Size of world in tiles
-	private static final int WORLDWIDTH = 25;
-	private static final int WORLDHEIGHT = 25;
+	private static final int WORLDWIDTH = 200;
+	private static final int WORLDHEIGHT = 200;
 	
 	// Milliseconds per update tick
-	private static final int MILLISPERTICK = 20;
+	private static final int MILLISPERTICK = 250;
 	private long lastTime = 0;
 	 
 	private World world;

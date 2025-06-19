@@ -46,4 +46,11 @@ public class Tile {
 	public int getSurfaceWater() {
 		return Math.max(0, water - WATERPERHEIGHT);
 	}
+	public int evaporate() { // remove and return 1 surface water if it exists
+		if (water > WATERPERHEIGHT) {
+			water--;
+			return 1;
+		}
+		else return 0;
+	}
 }

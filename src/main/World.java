@@ -8,8 +8,12 @@ public class World {
 	private int width, height;
 	private Tile[][] tileMap;
 	private int[][] flow;
-	private int count;
 	private static final float FLOWRATE = .5f; // percentage of a tiles water that can flow in one tick
+	private int waterVapor;
+	private int vaporCapacity;
+	private static final int TILECAPACITY = 50; // vapor capacity each tile will contribute to total
+	private static final int INITIALVAPORMULTIPLIER = 4; // the world starts with this many vaporcapacities worth of vapor
+	private boolean isRaining;
 	
 	 
 	public World(int width, int height) {
@@ -17,26 +21,45 @@ public class World {
 		this.height = height;
 		tileMap = new Tile[height][width];
 		flow = new int[height][width];
-		count = 0;
+		vaporCapacity = width * height * TILECAPACITY;
+		waterVapor = vaporCapacity * INITIALVAPORMULTIPLIER;
+		isRaining = false;
 	}
 	
 	public void update() {
-		count++;
+		waterFlowLoop();
+		if (waterVapor > vaporCapacity) {
+			isRaining = true;
+		}
+		
+		if (isRaining) {
+			rainLoop();
+		} else {
+			evaporationLoop();
+		}
+	}
+	private void rainLoop() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (count < 20) {
-					tileMap[y][x].addWater(10);
-				}
-				
-				if (tileMap[y][x].getSurfaceWater() > 0) {
-					waterFlow(x, y);
+				if (waterVapor == 0) {
+					isRaining = false;
+					return;
+				} else {
+					waterVapor--;
+					tileMap[y][x].addWater(1);
 				}
 			}
 		}
+	}
+	private void evaporationLoop() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				tileMap[y][x].addWater(flow[y][x]);
-				flow[y][x] = 0;
+				if (waterVapor > vaporCapacity) {
+					isRaining = true;
+					return;
+				} else {
+					waterVapor += tileMap[y][x].evaporate();
+				}
 			}
 		}
 	}
@@ -51,6 +74,22 @@ public class World {
 	
 	public int getHeight() {
 		return height;
+	}
+	
+	private void waterFlowLoop() {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (tileMap[y][x].getSurfaceWater() > 0) {
+					waterFlow(x, y);
+				}
+			}
+		}
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				tileMap[y][x].addWater(flow[y][x]);
+				flow[y][x] = 0;
+			}
+		}
 	}
 	
 	private void waterFlow(int x, int y) {
